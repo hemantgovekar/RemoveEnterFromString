@@ -5,16 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script language="javascript" type="text/javascript">
+        function words(str) {
+            return str.split(" ").reduce(function (count, word) {
+                count[word] = count.hasOwnProperty(word) ? count[word] + 1 : 1;
+
+                return count;
+            }, {});
+        }
+
         function addtext() {
             var newtext = document.myform.inputtext.value;
+            var count = words(newtext);
+            document.myform.textCount.value = count;
             if (document.myform.placement[1].checked) {
                 document.myform.outputtext.value = "";
             }
             document.myform.outputtext.value += newtext.replace(/\n/g, ' ');
         }
+
     </script>
 </head>
 
@@ -22,9 +32,8 @@
     <form name="myform">
         <table border="0" cellspacing="0" cellpadding="5">
             <tr>
-
+                <td>Count: <label id="textCount"></label> </td>
                 <td><textarea name="inputtext" rows="20" cols="50"></textarea></td>
-
                 <td>
                     <p>
                         <input type="radio" name="placement" value="append" checked> Add to Existing Text<br>
